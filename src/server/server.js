@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const validators = require('./validators');
 const dotenv = require('dotenv');
-const AylienTextApi = require('aylien_textapi');
 
 const debug = require('../lib/debug');
 const endpoints = require('./endpoints');
+const mockAPIResults = require('../lib/mockAPIResuls.js');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -19,11 +19,8 @@ app.use(express.static('dist'));
 
 debug(__dirname);
 
+// Read sensitive data (API KEYS) from .env
 dotenv.config();
-const aylienTextApi = new AylienTextApi({
-  application_id: process.env.API_ID,
-  application_key: process.env.API_KEY,
-});
 
 app.get('/', function(req, res) {
   res.sendFile(path.resolve('src/client/views/index.html'));
@@ -44,23 +41,11 @@ const analyzeText = (req, res) => {
     res.status(406).send(invalidUrlMessage);
     return;
   }
-
-  // Analyze text of URL
-  aylienTextApi.sentiment({
-    url: url,
-  }, function(error, response) {
-    if (error) {
-      debug(error.message);
-      res.status(404).send(error.message);
-    } else {
-      debug(response);
-      res.send(response);
-    }
-  });
+  res.send(mockAPIResults.validAndExistingUrl);
 };
 app.get('/analyzeText', analyzeText);
 
 // designates what port the app will listen to for incoming requests
 app.listen(config.serverPort, function() {
-  console.log(`Travel App: Server backend listening on port ${config.serverPort}`);
+  console.log(`Travel App: Server listening on port ${config.serverPort}`);
 });

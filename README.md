@@ -57,6 +57,7 @@ src
     - index.html
     
 + lib
+  - config.js
   - debug.js
   - mockAPIResuls.js
   
@@ -75,52 +76,6 @@ After the installation of Jest as testing framework the following test suites ha
 
 * **endpoints**: Backend endpoint tests
 * **formHandler**: Client-side tests
-* **testTheJest**: Getting Jest up and running (no serious tests)
 * **validators**: Validator tests
 
-The test suites are below the folder `__tests__` and following naming conventions suffixed by `.spec.js`. There are two issues I'd like to point out.
-
-First, for testability I tried to extract the server functionality into seperate modules. For the API-module `endpoints.js` I wasn't able to do this for the Alyien-API as it seems that it isn't compatible with JavaScript promises. I asked my mentor and after expoloring my problem he asked the Udacity-team with the above mentioned result. I commented the part out in `endpoints.js` and attached the conversation with my mentor for documentation. 
-
-**This issue may cost me an additional month. I would have prefered if the team had tested the promise-compatibility before chosing it for the students. Beside that I'd like to laud my mentor Veselin who always tried to support me but in this case even he (and also the team) couldn't help.**
-
-Second, as I wasn't able to get the server endpoint mockable, I needed to do some additional mocking on the client side. Some mock-coding became necessary in the productive code of `formHandler.js` like in the following code fragment:
-
-```javascript
-let mockResult = '';
-await callAnalyzeText(`http://localhost:8081/analyzeText/?url=${urlToAnalyze}`, useMock)
-    // Process response from service (or mock, if applicable)
-    .then((res) => {
-      if (!res.ok) {
-        debug(res);
-        const errorMessage = createErrorMessage(res);
-        throw errorMessage;
-      }
-      return useMock ? res : res.json();
-    })
-    // Prepare HTML to show as response
-    .then((res) => {
-      debug(`returned from server: ${JSON.stringify(res)}`);
-      if (useMock) {
-        mockResult = res;
-      } else {
-        document.getElementById('results').innerHTML = getResponseHtml(res);
-      }
-    })
-    // Error handling in case that something went wrong
-    .catch((err) => {
-      if (useMock) {
-        mockResult = err;
-      } else {
-        document.getElementById('results').innerHTML = getErrorHtml(err);
-      }
-    });
-if (useMock) {
-  return mockResult;
-}
-```
-
-I don't consider this kind of code with `if (useMock) {...}` as best practice but after having some serious issues with some forth/back-refactorings as described before I decided to be pragmatic in the cource of this exercise.
-
-Any advice how to to this better is highly appreciated.
-
+The test suites are below the folder `__tests__` and following naming conventions suffixed by `.spec.js`. 

@@ -9,7 +9,7 @@ const clientMock = require('./clientMock');
  */
 const getResponseHtml = (data) => {
   return `
-    <h2>Response from Aylien API</h2>
+    <h2>Response from API</h2>
     <ul>
         <li>${data.polarity} (${data.polarity_confidence})</li>
         <li>${data.subjectivity} (${data.subjectivity_confidence})</li>
