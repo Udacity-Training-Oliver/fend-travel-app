@@ -15,7 +15,7 @@ const apiKeys = {
 const baseUrls = {
   geonamesBaseUrl: 'http://api.geonames.org/postalCodeSearchJSON?placename={city}&country={country}&maxRows=1&username={apikey}',
   darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude}?exclude=hourly,flags',
-  pixabayBaseUrl: 'https://pixabay.com/api/?key={apikey}=yellow+flowers&image_type=photo&pretty=true',
+  pixabayBaseUrl: 'https://pixabay.com/api/?key={apikey}&q={city}&image_type=photo&pretty=true',
 };
 
 const endpoints = {
@@ -62,6 +62,23 @@ const endpoints = {
         resolve(data);
       } catch (error) {
         debug(`destinationCoordinates: ${error}`);
+      }
+    });
+  },
+  destinationPhotos: async (city) => {
+    return new Promise(async (resolve, reject) => {
+      const url = baseUrls.pixabayBaseUrl
+          .replace(/{apikey}/g, apiKeys.pixabayApiKey)
+          .replace(/{city}/g, city);
+      debug(`destinationPhotos: ${url}`);
+
+      const response = await fetch(url);
+
+      try {
+        const data = await response.json();
+        resolve(data);
+      } catch (error) {
+        debug(`destinationPhotos: ${error}`);
       }
     });
   },

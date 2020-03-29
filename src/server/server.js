@@ -21,14 +21,17 @@ app.get('/', function(req, res) {
 
 app.get('/destinationDetails', async (req, res) => {
   // Get parameters and replace whitespaces by + for city
-  // const city = req.query.city.replace(/\s/g, '+');
+  const city = req.query.city.replace(/\s/g, '+');
   // const country = req.query.country;
 
   // Sample call: http://localhost:8081/destinationDetails?city=Wedel&country=DE
   // await endpoints.destinationCoordinates(city, country)
   //     .then((data) => res.send(data));
 
-  await endpoints.destinationWeather(9.698352813720703, 53.5837417752879)
+  // await endpoints.destinationWeather(9.698352813720703, 53.5837417752879)
+  //     .then((data) => res.send(data));
+
+  await endpoints.destinationPhotos(city)
       .then((data) => res.send(data));
 });
 
