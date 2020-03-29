@@ -14,7 +14,7 @@ const apiKeys = {
 
 const baseUrls = {
   geonamesBaseUrl: 'http://api.geonames.org/postalCodeSearchJSON?placename={city}&country={country}&maxRows=1&username={apikey}',
-  darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude}',
+  darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude}?exclude=hourly,flags',
   pixabayBaseUrl: 'https://pixabay.com/api/?key={apikey}=yellow+flowers&image_type=photo&pretty=true',
 };
 
@@ -29,13 +29,13 @@ const endpoints = {
       resolve(mockAPIResults.geonamesSuccess);
     });
   },
-  destinationDetails: async (city, country) =>{
+  destinationCoordinates: async (city, country) =>{
     return new Promise(async (resolve, reject) => {
       const url = baseUrls.geonamesBaseUrl
           .replace(/{apikey}/g, apiKeys.geonamesApiKey)
           .replace(/{city}/g, city)
           .replace(/{country}/g, country);
-      debug(`destinationDetails: ${url}`);
+      debug(`destinationCoordinates: ${url}`);
 
       const response = await fetch(url);
 
@@ -43,7 +43,25 @@ const endpoints = {
         const data = await response.json();
         resolve(data);
       } catch (error) {
-        debug(`destinationDetails: ${error}`);
+        debug(`destinationCoordinates: ${error}`);
+      }
+    });
+  },
+  destinationWeather: async (longitude, latitude) => {
+    return new Promise(async (resolve, reject) => {
+      const url = baseUrls.darkSkyBaseUrl
+          .replace(/{apikey}/g, apiKeys.darkSkyApiKey)
+          .replace(/{latitude}/g, latitude)
+          .replace(/{longitude}/g, longitude);
+      debug(`destinationCoordinates: ${url}`);
+
+      const response = await fetch(url);
+
+      try {
+        const data = await response.json();
+        resolve(data);
+      } catch (error) {
+        debug(`destinationCoordinates: ${error}`);
       }
     });
   },
