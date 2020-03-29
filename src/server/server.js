@@ -4,8 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const validators = require('./validators');
-const dotenv = require('dotenv');
-
 const debug = require('../lib/debug');
 const endpoints = require('./endpoints');
 const mockAPIResults = require('../lib/mockAPIResuls.js');
@@ -14,16 +12,20 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
-
 app.use(express.static('dist'));
 
-debug(__dirname);
-
-// Read sensitive data (API KEYS) from .env
-dotenv.config();
-
+// Redirect root to static content
 app.get('/', function(req, res) {
   res.sendFile(path.resolve('src/client/views/index.html'));
+});
+
+app.get('/destinationDetails', async (req, res) => {
+  // Get parameters and replace whitespaces by + for city
+  const city = req.query.city.replace(/\s/g, '+');
+  const country = req.query.country;
+
+  await endpoints.destinationDetails(city, country)
+      .then((data) => res.send(data));
 });
 
 app.get('/test', async (req, res) => {

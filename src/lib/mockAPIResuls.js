@@ -25,6 +25,23 @@ const mockAPIResults = {
     'status': 500,
     'statusText': 'Internal Server Error',
   },
+  geonamesSuccess: {
+    'postalCodes': [
+      {
+        'adminCode2': '00',
+        'adminCode3': '01056',
+        'adminName3': 'Kreis Pinneberg',
+        'adminCode1': 'SH',
+        'lng': 9.80085833333333,
+        'countryCode': 'DE',
+        'postalCode': '25421',
+        'adminName1': 'Schleswig-Holstein',
+        'ISO3166-2': 'SH',
+        'placeName': 'Pinneberg',
+        'lat': 53.6591083333333,
+      },
+    ],
+  },
 };
 
 module.exports = mockAPIResults;

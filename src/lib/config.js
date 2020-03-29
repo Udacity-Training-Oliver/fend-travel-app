@@ -1,5 +1,5 @@
 const config = {
-  enableDebugInfo: false,
+  enableDebugInfo: true,
   serverPort: 8081,
 };
 
