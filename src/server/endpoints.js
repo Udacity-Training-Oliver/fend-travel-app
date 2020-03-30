@@ -16,9 +16,11 @@ const baseUrls = {
   geonamesBaseUrl: 'http://api.geonames.org/postalCodeSearchJSON?placename={city}&country={country}&maxRows=1&username={apikey}',
   darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude}?exclude=hourly,flags',
   pixabayBaseUrl: 'https://pixabay.com/api/?key={apikey}&q={city}&image_type=photo&pretty=true',
+  countryBaseUrl: 'http://country.io/names.json',
 };
 
 const endpoints = {
+  // Mocked API calls
   mockAPICall: async (url) => {
     return new Promise((resolve, reject) => {
       resolve(mockAPIResults.validAndExistingUrl);
@@ -29,7 +31,31 @@ const endpoints = {
       resolve(mockAPIResults.geonamesSuccess);
     });
   },
-  destinationCoordinates: async (city, country) =>{
+
+  // Real API calls
+  countries: async () => {
+    return new Promise(async (resolve, reject) => {
+      const response = await fetch(baseUrls.countryBaseUrl);
+      try {
+        const data = await response.json();
+        const countries = [];
+        for (const [key, value] of Object.entries(data)) {
+          const country = {
+            code: key,
+            name: value,
+          };
+          countries.push(country);
+        }
+        countries.sort((a, b) => a.name > b.name ? 1 : -1);
+        countries.unshift({name: '--- Select Country ---'});
+        debug(countries);
+        resolve(countries);
+      } catch (error) {
+        debug(`getCountryData: ${error}`);
+      }
+    });
+  },
+  destinationCoordinates: async (city, country) => {
     return new Promise(async (resolve, reject) => {
       const url = baseUrls.geonamesBaseUrl
           .replace(/{apikey}/g, apiKeys.geonamesApiKey)
