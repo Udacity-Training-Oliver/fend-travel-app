@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 });
 
 const getCountries = async () => {
-  const url = `http://localhost:${config.serverPort}/countries`;
+  const url = `http://${config.serverName}:${config.serverPort}/countries`;
   const response = await fetch(url);
   try {
     const data = await response.json();

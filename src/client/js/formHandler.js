@@ -76,7 +76,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   debug(`urlToAnalyze: ${urlToAnalyze}`);
 
   let mockResult = '';
-  await callAnalyzeText(`http://localhost:${config.serverPort}/analyzeText/?url=${urlToAnalyze}`, useMock)
+  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/analyzeText/?url=${urlToAnalyze}`, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
