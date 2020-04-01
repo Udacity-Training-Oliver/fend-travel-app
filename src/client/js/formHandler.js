@@ -2,6 +2,8 @@ const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 const clientMock = require('./clientMock');
 
+let currentCountry = null;
+
 /**
  * Compose the HTML for the client
  * @param {*} data JSON object returned from the server
@@ -57,6 +59,15 @@ const callAnalyzeText = async (url, useMock) => {
   }) : fetch(url);
 };
 
+
+document.getElementById('sel-country').addEventListener('change', (event) => {
+  debug(`Country before: ${currentCountry}`);
+  currentCountry = event.srcElement.value;
+  debug(`Country after ${currentCountry}`);
+
+  document.getElementById('txt-city').value = null;
+});
+
 /**
  * Handle submit event from form
  * @param {*} event
@@ -72,7 +83,9 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   }
 
   const useMock = mockUrlToAnalyze != undefined;
-  const urlToAnalyze = mockUrlToAnalyze || document.getElementById('url').value;
+  const urlToAnalyze = mockUrlToAnalyze ||
+    document.getElementById('city').value;
+
   debug(`urlToAnalyze: ${urlToAnalyze}`);
 
   let mockResult = '';

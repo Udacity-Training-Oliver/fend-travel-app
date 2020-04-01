@@ -1,7 +1,7 @@
 const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', (event) => {
   getCountries().then(function(countries) {
     debug(countries);
 
