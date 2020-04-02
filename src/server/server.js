@@ -24,9 +24,24 @@ app.get('/destinationDetails', async (req, res) => {
   const city = req.query.city.replace(/\s/g, '+');
   const country = req.query.country;
 
-  // Sample call: http://localhost:8081/destinationDetails?city=Wedel&country=DE
+  let clientData = {};
+
   await endpoints.destinationCoordinates(city, country)
-      .then((data) => res.send(data));
+      .then((coordinates) => clientData = {...clientData, ...coordinates});
+  debug(clientData);
+
+  await endpoints.destinationWeather(clientData.longitude, clientData.latitude)
+      .then((weather) => clientData = {...clientData, ...weather});
+  debug(clientData);
+
+  await endpoints.destinationPhotos(city)
+      .then((photos) => clientData = {...clientData, ...photos});
+
+  res.send(clientData);
+
+  // Sample call: http://localhost:8081/destinationDetails?city=Wedel&country=DE
+  // await endpoints.destinationCoordinates(city, country)
+  //     .then((data) => res.send(data));
 
   // await endpoints.destinationWeather(9.698352813720703, 53.5837417752879)
   //     .then((data) => res.send(data));

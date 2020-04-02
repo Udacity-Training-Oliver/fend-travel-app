@@ -67,7 +67,20 @@ const endpoints = {
 
       try {
         const data = await response.json();
-        resolve(data);
+        const item = data.postalCodes[0];
+
+        const coordinates = {
+          country: item.countryCode,
+          state: item.adminName1,
+          province: item.adminName3,
+          zip: item.postalCode,
+          city: item.placeName,
+          latitude: item.lat,
+          longitude: item.lng,
+        };
+
+        // debug(coordinates);
+        resolve(coordinates);
       } catch (error) {
         debug(`destinationCoordinates: ${error}`);
       }
@@ -85,7 +98,34 @@ const endpoints = {
 
       try {
         const data = await response.json();
-        resolve(data);
+
+        const currentWeather = data.currently;
+        const forecastedWeather = data.daily.data;
+
+        const weatherData = {
+          weather: {
+            current: {
+              time: currentWeather.time,
+              summary: currentWeather.summary,
+              temperature: currentWeather.temperature,
+              windSpeed: currentWeather.windSpeed,
+            },
+            forecast: [],
+          },
+        };
+
+        for (const daily of forecastedWeather) {
+          weatherData.weather.forecast.push({
+            time: daily.time,
+            iconName: daily.icon,
+            summary: daily.summary,
+            minTemperature: daily.temperatureLow,
+            maxTemperature: daily.temperatureMax,
+            windSpeed: daily.windSpeed,
+          });
+        }
+
+        resolve(weatherData);
       } catch (error) {
         debug(`destinationCoordinates: ${error}`);
       }
@@ -102,7 +142,20 @@ const endpoints = {
 
       try {
         const data = await response.json();
-        resolve(data);
+        const photos = data.hits;
+
+        const photoData = {
+          photos: [],
+        };
+        for (const photo of photos) {
+          photoData.photos.push({
+            tags: photo.tags,
+            previewUrl: photo.previewURL,
+            url: photo.webformatURL,
+          });
+        }
+
+        resolve(photoData);
       } catch (error) {
         debug(`destinationPhotos: ${error}`);
       }
