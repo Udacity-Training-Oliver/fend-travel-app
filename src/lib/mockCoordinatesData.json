@@ -1,0 +1,17 @@
+{
+  "postalCodes": [
+    {
+      "adminCode2": "00",
+      "adminCode3": "01056",
+      "adminName3": "Kreis Pinneberg",
+      "adminCode1": "SH",
+      "lng": 9.698352813720703,
+      "countryCode": "DE",
+      "postalCode": "22880",
+      "adminName1": "Schleswig-Holstein",
+      "ISO3166-2": "SH",
+      "placeName": "Wedel",
+      "lat": 53.5837417752879
+    }
+  ]
+}
