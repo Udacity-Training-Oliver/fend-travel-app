@@ -14,7 +14,7 @@ const apiKeys = {
 
 const baseUrls = {
   geonamesBaseUrl: 'http://api.geonames.org/postalCodeSearchJSON?placename={city}&country={country}&maxRows=1&username={apikey}',
-  darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude}?exclude=hourly,flags',
+  darkSkyBaseUrl: 'https://api.darksky.net/forecast/{apikey}/{latitude},{longitude},{travelDate}?exclude=currently,hourly,flags&units=ca',
   pixabayBaseUrl: 'https://pixabay.com/api/?key={apikey}&q={city}&image_type=photo&pretty=true',
   countryBaseUrl: 'http://country.io/names.json',
 };
@@ -86,11 +86,12 @@ const endpoints = {
       }
     });
   },
-  destinationWeather: async (longitude, latitude) => {
+  destinationWeather: async (longitude, latitude, travelDate) => {
     return new Promise(async (resolve, reject) => {
       const url = baseUrls.darkSkyBaseUrl
           .replace(/{apikey}/g, apiKeys.darkSkyApiKey)
           .replace(/{latitude}/g, latitude)
+          .replace(/{travelDate}/g, travelDate)
           .replace(/{longitude}/g, longitude);
       debug(`destinationCoordinates: ${url}`);
 
@@ -98,32 +99,17 @@ const endpoints = {
 
       try {
         const data = await response.json();
-
-        const currentWeather = data.currently;
-        const forecastedWeather = data.daily.data;
-
+        const day = data.daily.data[0];
         const weatherData = {
           weather: {
-            current: {
-              time: currentWeather.time,
-              summary: currentWeather.summary,
-              temperature: currentWeather.temperature,
-              windSpeed: currentWeather.windSpeed,
-            },
-            forecast: [],
+            time: new Date(day.time*1000).toISOString(),
+            iconName: day.icon,
+            summary: day.summary,
+            minTemperature: day.temperatureLow,
+            maxTemperature: day.temperatureMax,
+            windSpeed: day.windSpeed,
           },
         };
-
-        for (const daily of forecastedWeather) {
-          weatherData.weather.forecast.push({
-            time: daily.time,
-            iconName: daily.icon,
-            summary: daily.summary,
-            minTemperature: daily.temperatureLow,
-            maxTemperature: daily.temperatureMax,
-            windSpeed: daily.windSpeed,
-          });
-        }
 
         resolve(weatherData);
       } catch (error) {

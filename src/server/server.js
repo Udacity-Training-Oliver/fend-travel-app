@@ -23,14 +23,17 @@ app.get('/destinationDetails', async (req, res) => {
   // Get parameters and replace whitespaces by + for city
   const city = req.query.city.replace(/\s/g, '+');
   const country = req.query.country;
-
+  const travelDate = Date.parse(req.query.travelDate) / 1000 + 86400;
   let clientData = {};
 
   await endpoints.destinationCoordinates(city, country)
       .then((coordinates) => clientData = {...clientData, ...coordinates});
   debug(clientData);
 
-  await endpoints.destinationWeather(clientData.longitude, clientData.latitude)
+  await endpoints.destinationWeather(
+      clientData.longitude,
+      clientData.latitude,
+      travelDate)
       .then((weather) => clientData = {...clientData, ...weather});
   debug(clientData);
 
