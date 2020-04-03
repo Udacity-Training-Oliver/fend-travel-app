@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       selItems.appendChild(opt);
     }
 
-    const selCountry = document.getElementById('sel-country');
+    const selCountry = document.getElementById('country');
     selCountry.appendChild(selItems);
   });
 });

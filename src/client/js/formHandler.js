@@ -10,16 +10,16 @@ let currentCountry = null;
  * @return {string} HTML
  */
 const getResponseHtml = (data) => {
+  const weather = data.weather;
+
   return `
     <h2>Response from API</h2>
     <ul>
-        <li>${data.polarity} (${data.polarity_confidence})</li>
-        <li>${data.subjectivity} (${data.subjectivity_confidence})</li>
+      <li>${weather.time}</li>
+      <li>${weather.summary}</li>
+      <li>${weather.minTemperature}</li>
+      <li>${weather.maxTemperature}</li>
     </ul>
-    <h2>Text behind the link</h2>
-    <p>
-      ${data.text.replace(/\n*\n/g, '<br>')}
-    </p>
   `;
 };
 
@@ -60,12 +60,12 @@ const callAnalyzeText = async (url, useMock) => {
 };
 
 
-document.getElementById('sel-country').addEventListener('change', (event) => {
+document.getElementById('country').addEventListener('change', (event) => {
   debug(`Country before: ${currentCountry}`);
   currentCountry = event.srcElement.value;
   debug(`Country after ${currentCountry}`);
 
-  document.getElementById('txt-city').value = null;
+  document.getElementById('city').value = null;
 });
 
 /**
@@ -83,13 +83,18 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   }
 
   const useMock = mockUrlToAnalyze != undefined;
-  const urlToAnalyze = mockUrlToAnalyze ||
-    document.getElementById('city').value;
 
-  debug(`urlToAnalyze: ${urlToAnalyze}`);
+  const countryElement = document.getElementById('country');
+  const country = countryElement.options[countryElement.selectedIndex].value;
+  const city = document.getElementById('city').value;
+  const travelDate = document.getElementById('travelDate').value;
+
+  debug(`country: ${country}`);
+  debug(`city: ${city}`);
+  debug(`travelDate: ${travelDate}`);
 
   let mockResult = '';
-  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/analyzeText/?url=${urlToAnalyze}`, useMock)
+  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${country}&city=${city}&travelDate=${travelDate}`, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
