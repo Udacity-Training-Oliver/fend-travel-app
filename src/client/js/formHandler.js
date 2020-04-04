@@ -2,7 +2,8 @@ const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 const clientMock = require('./clientMock');
 
-let currentCountry = null;
+let countries = null;
+let currentCountryCode = null;
 
 /**
  * Compose the HTML for the client
@@ -76,17 +77,15 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
 
   const useMock = mockUrlToAnalyze != undefined;
 
-  const countryElement = document.getElementById('country');
-  const country = countryElement.options[countryElement.selectedIndex].value;
   const city = document.getElementById('city').value;
   const travelDate = document.getElementById('travelDate').value;
 
-  debug(`country: ${country}`);
+  debug(`country: ${currentCountryCode}`);
   debug(`city: ${city}`);
   debug(`travelDate: ${travelDate}`);
 
   let mockResult = '';
-  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${country}&city=${city}&travelDate=${travelDate}`, useMock)
+  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
@@ -119,26 +118,30 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
 };
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  getCountries().then(function(countries) {
+  getCountries().then(function(data) {
+    countries = data;
     debug(countries);
 
-    const selItems = new DocumentFragment();
+    const options = new DocumentFragment();
     for (const country of countries) {
       const opt = document.createElement('option');
-      opt.setAttribute('value', country.code);
-      opt.textContent = country.name;
-      selItems.appendChild(opt);
+      opt.setAttribute('data-value', country.code);
+      opt.setAttribute('value', country.name);
+      options.appendChild(opt);
     }
 
-    const selCountry = document.getElementById('country');
-    selCountry.appendChild(selItems);
+    const datalistCountry = document.getElementById('countries');
+    datalistCountry.appendChild(options);
   });
 });
 
 document.getElementById('country').addEventListener('change', (event) => {
-  debug(`Country before: ${currentCountry}`);
-  currentCountry = event.srcElement.value;
-  debug(`Country after ${currentCountry}`);
+  debug(`Country before: ${currentCountryCode}`);
+  const currentCountryName = event.srcElement.value;
+  const currentCountryOption = document
+      .querySelector(`#countries option[value='${currentCountryName}']`);
+  currentCountryCode = currentCountryOption.dataset.value;
+  debug(`Country after ${currentCountryCode}`);
 
   document.getElementById('city').value = null;
 });

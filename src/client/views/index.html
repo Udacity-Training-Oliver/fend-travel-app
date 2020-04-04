@@ -25,7 +25,9 @@
   <main>
     <section>
       <form class="" onsubmit="return Client.handleSubmit(event)">
-        <select id="country"></select>
+        <input id="country" list="countries" autocomplete="on">
+        <datalist id="countries"></datalist>
+
         <input id="city" type="text" name="input" value="" placeholder="Enter a city here"> 
         <input id="travelDate" type="text" name="input" value="" placeholder="Enter travel date here in ISO"> 
         <input type="submit" name="" value="Analyze Text" onclick="return Client.handleSubmit(event)"

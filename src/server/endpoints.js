@@ -47,7 +47,6 @@ const endpoints = {
           countries.push(country);
         }
         countries.sort((a, b) => a.name > b.name ? 1 : -1);
-        countries.unshift({name: '--- Select Country ---'});
         debug(countries);
         resolve(countries);
       } catch (error) {
