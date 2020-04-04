@@ -60,14 +60,6 @@ const callAnalyzeText = async (url, useMock) => {
 };
 
 
-document.getElementById('country').addEventListener('change', (event) => {
-  debug(`Country before: ${currentCountry}`);
-  currentCountry = event.srcElement.value;
-  debug(`Country after ${currentCountry}`);
-
-  document.getElementById('city').value = null;
-});
-
 /**
  * Handle submit event from form
  * @param {*} event
@@ -123,6 +115,42 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
       });
   if (useMock) {
     return mockResult;
+  }
+};
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  getCountries().then(function(countries) {
+    debug(countries);
+
+    const selItems = new DocumentFragment();
+    for (const country of countries) {
+      const opt = document.createElement('option');
+      opt.setAttribute('value', country.code);
+      opt.textContent = country.name;
+      selItems.appendChild(opt);
+    }
+
+    const selCountry = document.getElementById('country');
+    selCountry.appendChild(selItems);
+  });
+});
+
+document.getElementById('country').addEventListener('change', (event) => {
+  debug(`Country before: ${currentCountry}`);
+  currentCountry = event.srcElement.value;
+  debug(`Country after ${currentCountry}`);
+
+  document.getElementById('city').value = null;
+});
+
+const getCountries = async () => {
+  const url = `http://${config.serverName}:${config.serverPort}/countries`;
+  const response = await fetch(url);
+  try {
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    debug(`getCountries: ${error}`);
   }
 };
 
