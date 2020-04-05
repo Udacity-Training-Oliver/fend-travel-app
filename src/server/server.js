@@ -24,7 +24,13 @@ app.get('/destinationDetails', async (req, res) => {
   const city = req.query.city.replace(/\s/g, '+');
   const country = req.query.country;
   const travelDate = Date.parse(req.query.travelDate) / 1000 + 86400;
-  let clientData = {};
+
+  const timeDiff = Date.parse(req.query.travelDate) - Date.now();
+  const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+
+  let clientData = {
+    daysAway: dayDiff,
+  };
 
   await endpoints.destinationCoordinates(city, country)
       .then((coordinates) => clientData = {...clientData, ...coordinates});

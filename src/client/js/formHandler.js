@@ -17,6 +17,8 @@ const getResponseHtml = (data) => {
     <h2>Response from API</h2>
     <ul>
       <li>${weather.time}</li>
+      <li>${data.daysAway}</li>
+      <li>icon: ${weather.iconName}</li>
       <li>${weather.summary}</li>
       <li>${weather.minTemperature}</li>
       <li>${weather.maxTemperature}</li>
@@ -78,7 +80,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const useMock = mockUrlToAnalyze != undefined;
 
   const city = document.getElementById('city').value;
-  const travelDate = document.getElementById('travelDate').value;
+  const travelDate = document.getElementById('travel-date').value;
 
   debug(`country: ${currentCountryCode}`);
   debug(`city: ${city}`);
@@ -102,6 +104,8 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           mockResult = res;
         } else {
           document.getElementById('results').innerHTML = getResponseHtml(res);
+
+          document.getElementById('travel-details');
         }
       })
       // Error handling in case that something went wrong
