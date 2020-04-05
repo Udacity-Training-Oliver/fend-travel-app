@@ -3,6 +3,7 @@ const debug = require('../../lib/debug');
 const clientMock = require('./clientMock');
 
 let countries = null;
+let currentCountry = null;
 let currentCountryCode = null;
 
 /**
@@ -16,6 +17,8 @@ const getResponseHtml = (data) => {
   return `
     <h2>Response from API</h2>
     <ul>
+      <li>${data.country}</li>
+      <li>${data.city}</li>
       <li>${weather.time}</li>
       <li>${data.daysAway}</li>
       <li>icon: ${weather.iconName}</li>
@@ -87,7 +90,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   debug(`travelDate: ${travelDate}`);
 
   let mockResult = '';
-  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
+  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountry}&countryCode=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
@@ -144,6 +147,7 @@ document.getElementById('country').addEventListener('change', (event) => {
   const currentCountryName = event.srcElement.value;
   const currentCountryOption = document
       .querySelector(`#countries option[value='${currentCountryName}']`);
+  currentCountry = currentCountryOption.value;
   currentCountryCode = currentCountryOption.dataset.value;
   debug(`Country after ${currentCountryCode}`);
 

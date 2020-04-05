@@ -73,7 +73,7 @@ const endpoints = {
           state: item.adminName1,
           province: item.adminName3,
           zip: item.postalCode,
-          city: item.placeName,
+          // was set before city: item.placeName,
           latitude: item.lat,
           longitude: item.lng,
         };
@@ -101,7 +101,7 @@ const endpoints = {
         const day = data.daily.data[0];
         const weatherData = {
           weather: {
-            time: new Date(day.time*1000).toISOString(),
+            time: new Date(day.time*1000).toISOString().split('T')[0],
             iconName: day.icon,
             summary: day.summary,
             minTemperature: day.temperatureLow,
