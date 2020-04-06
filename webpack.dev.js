@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const path = require('path');
 const webpack = require('webpack');
+const fileLoader = require('file-loader');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
@@ -23,6 +24,10 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader'],
       },
     ],
   },

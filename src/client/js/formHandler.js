@@ -2,9 +2,34 @@ const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 const clientMock = require('./clientMock');
 
+import clearDayIcon from '../images/clear-day.png';
+import clearNightIcon from '../images/clear-night.png';
+import cloudyIcon from '../images/cloudy.png';
+import fogIcon from '../images/fog.png';
+import partlyCloudyDayIcon from '../images/partly-cloudy-day.png';
+import partlyCloudyNightIcon from '../images/partly-cloudy-night.png';
+import rainIcon from '../images/rain.png';
+import sleetIcon from '../images/sleet.png';
+import snowIcon from '../images/snow.png';
+import windIcon from '../images/wind.png';
+
+// Variables
 let countries = null;
 let currentCountry = null;
 let currentCountryCode = null;
+
+const weatherIcons = {
+  'clear-day': clearDayIcon,
+  'clear-night': clearNightIcon,
+  'partly-cloudy-day': partlyCloudyDayIcon,
+  'partly-cloudy-night': partlyCloudyNightIcon,
+  'cloudy': cloudyIcon,
+  'rain': rainIcon,
+  'sleet': sleetIcon,
+  'snow': snowIcon,
+  'wind': windIcon,
+  'fog': fogIcon,
+};
 
 /**
  * Compose the HTML for the client
@@ -107,8 +132,12 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           mockResult = res;
         } else {
           document.getElementById('results').innerHTML = getResponseHtml(res);
-
           document.getElementById('travel-details');
+
+          // TODO Check whether icon has been returned bu API
+          const weatherIcon = document.getElementById('weather-icon');
+          debug(res.weather.iconName);
+          weatherIcon.src = weatherIcons[res.weather.iconName]; // clearDayIcon;
         }
       })
       // Error handling in case that something went wrong
@@ -165,4 +194,5 @@ const getCountries = async () => {
   }
 };
 
-module.exports = handleSubmit;
+// module.exports = handleSubmit;
+export default handleSubmit;
