@@ -25,11 +25,17 @@
   <main>
     <section>
       <form class="" onsubmit="return Client.handleSubmit(event)">
-        <input id="country" list="countries" autocomplete="on">
+
+        <label for="country">Country</label>
+        <input id="country" list="countries"  placeholder="Enter a country here" required autocomplete="on">
         <datalist id="countries"></datalist>
 
-        <input id="city" type="text" name="input" value="" placeholder="Enter a city here"> 
-        <input id="travel-date" type="text" name="input" value="" placeholder="Enter travel date here in ISO"> 
+        <label for="city">City</label>
+        <input id="city" type="text" name="input" value="" required placeholder="Enter a city here"> 
+
+        <label for="travel-date">Travel Date</label>
+        <input id="travel-date" type="date" required>
+
         <input type="submit" name="" value="Analyze Text" onclick="return Client.handleSubmit(event)"
           onsubmit="return Client.handleSubmit(event)">
       </form>
