@@ -110,6 +110,9 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const city = document.getElementById('city').value;
   const travelDate = document.getElementById('travel-date').value;
 
+  // TODO remove debug assignment
+  currentCountryCode = currentCountryCode || 'FR';
+
   debug(`country: ${currentCountryCode}`);
   debug(`city: ${city}`);
   debug(`travelDate: ${travelDate}`);

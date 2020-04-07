@@ -15,7 +15,7 @@
 
   <header>
     <div class="">
-      Logo
+      Travel Planner
     </div>
     <div class="">
       Navigation
@@ -27,16 +27,19 @@
       <form class="" onsubmit="return Client.handleSubmit(event)">
 
         <label for="country">Country</label>
-        <input id="country" list="countries"  placeholder="Enter a country here" required autocomplete="on">
+        <input id="country" list="countries"  placeholder="Enter a country here" required autocomplete="on"
+          data-value="FR" value="France">
         <datalist id="countries"></datalist>
 
         <label for="city">City</label>
-        <input id="city" type="text" name="input" value="" required placeholder="Enter a city here"> 
+        <input id="city" type="text" required placeholder="Enter a city here"
+          value="Paris"> 
 
-        <label for="travel-date">Travel Date</label>
-        <input id="travel-date" type="date" required>
+        <label for="travel-date">Trip start</label>
+        <input id="travel-date" type="date" required
+          value="2020-08-03">
 
-        <input type="submit" name="" value="Analyze Text" onclick="return Client.handleSubmit(event)"
+        <input type="submit" name="" value="Search Trips" onclick="return Client.handleSubmit(event)"
           onsubmit="return Client.handleSubmit(event)">
       </form>
       <section>
