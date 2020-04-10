@@ -23,40 +23,41 @@
   </header>
 
   <main>
-    <section>
+    <section id="search-trip">
       <form class="" onsubmit="return Client.handleSubmit(event)">
 
         <label for="country">Country</label>
-        <input id="country" list="countries"  placeholder="Enter a country here" required autocomplete="on"
+        <input id="country" list="countries" placeholder="Enter a country here" required autocomplete="on"
           data-value="FR" value="France">
         <datalist id="countries"></datalist>
 
         <label for="city">City</label>
-        <input id="city" type="text" required placeholder="Enter a city here"
-          value="Paris"> 
+        <input id="city" type="text" required placeholder="Enter a city here" value="Paris">
 
         <label for="travel-date">Trip start</label>
-        <input id="travel-date" type="date" required
-          value="2020-08-03">
+        <input id="travel-date" type="date" required value="2020-08-03">
 
         <input type="submit" name="" value="Search Trips" onclick="return Client.handleSubmit(event)"
           onsubmit="return Client.handleSubmit(event)">
       </form>
-      <section>
+    </section>
 
-        <section>
-          <h1>Results:</h1>
-          <img id="weather-icon">
-          <div id="results"></div>
-        </section>
-      </main>
+    <section id="trip-details">
+      <h1>Trip Details:</h1>
+      <img id="weather-icon">
+      <div id="results"></div>
+      <div id="location-photos">
+        <!-- <img id="location-photo"> -->
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>This is a footer</p>
   </footer>
 
-<!-- TODO enable service worker before submission -->
-<!-- <script>
+  <!-- TODO enable service worker before submission -->
+  <!-- <script>
     // Check that service workers are supported
     if ('serviceWorker' in navigator) {
         // Use the window load event to keep the page load performant

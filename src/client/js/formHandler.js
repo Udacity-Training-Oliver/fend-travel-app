@@ -137,10 +137,27 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           document.getElementById('results').innerHTML = getResponseHtml(res);
           document.getElementById('travel-details');
 
-          // TODO Check whether icon has been returned bu API
+          // TODO Check whether icon has been returned by API
+          // TODO Create function
           const weatherIcon = document.getElementById('weather-icon');
-          debug(res.weather.iconName);
-          weatherIcon.src = weatherIcons[res.weather.iconName]; // clearDayIcon;
+          const weather = res.weather;
+          const altWeatherText = weather.iconName.replace(/-/g, ' ');
+          debug(weather.iconName);
+          weatherIcon.src = weatherIcons[weather.iconName];
+          weatherIcon.alt = altWeatherText;
+          weatherIcon.title = altWeatherText;
+
+          // TODO Create function
+          const photos = new DocumentFragment();
+          for (const photo of res.photos) {
+            const image = document.createElement('img');
+            image.setAttribute('src', photo.url);
+            image.setAttribute('title', photo.tags);
+            image.setAttribute('alt', photo.tags);
+            photos.appendChild(image);
+          }
+          const locationPhotos = document.getElementById('location-photos');
+          locationPhotos.appendChild(photos);
         }
       })
       // Error handling in case that something went wrong
