@@ -1,0 +1,120 @@
+{
+  "country": "FR",
+  "city": "Paris",
+  "daysAway": 115,
+  "state": "Île-de-France",
+  "province": "Paris",
+  "zip": "75001",
+  "latitude": 48.8592,
+  "longitude": 2.3417,
+  "weather": {
+    "time": "2020-08-03",
+    "iconName": "partly-cloudy-day",
+    "summary": "Partly cloudy throughout the day.",
+    "minTemperature": 17.63,
+    "maxTemperature": 24.01,
+    "windSpeed": 10.76
+  },
+  "photos": [
+    {
+      "tags": "louvre, pyramid, paris",
+      "previewUrl": "https://cdn.pixabay.com/photo/2013/04/11/19/46/louvre-102840_150.jpg",
+      "url": "https://pixabay.com/get/57e0d74b4e52b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, paris, tower",
+      "previewUrl": "https://cdn.pixabay.com/photo/2013/04/13/18/42/eiffel-tower-103417_150.jpg",
+      "url": "https://pixabay.com/get/57e0d6474b55b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "paris, france, eiffel tower",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/11/18/19/01/paris-1836415_150.jpg",
+      "url": "https://pixabay.com/get/57e8d6454e53a914f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "bicycle, building, city",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/11/23/00/39/bicycle-1851497_150.jpg",
+      "url": "https://pixabay.com/get/57e8d0424e5bab14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, paris, france",
+      "previewUrl": "https://cdn.pixabay.com/photo/2018/04/25/09/26/eiffel-tower-3349075_150.jpg",
+      "url": "https://pixabay.com/get/55e3d14a4a55a914f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, long exposure, lights",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/01/22/16/42/eiffel-tower-1156146_150.jpg",
+      "url": "https://pixabay.com/get/57e1d0454b56aa14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "paris, france, bridge",
+      "previewUrl": "https://cdn.pixabay.com/photo/2017/07/13/03/15/paris-2499022_150.jpg",
+      "url": "https://pixabay.com/get/54e4dc4a4a50ae14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "croissant, bread, food",
+      "previewUrl": "https://cdn.pixabay.com/photo/2013/04/07/21/30/croissant-101636_150.jpg",
+      "url": "https://pixabay.com/get/57e0d4454954b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "paris, eiffel tower, france",
+      "previewUrl": "https://cdn.pixabay.com/photo/2015/07/13/14/40/paris-843229_150.jpg",
+      "url": "https://pixabay.com/get/5ee4d641485bb10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, france, paris",
+      "previewUrl": "https://cdn.pixabay.com/photo/2015/10/06/18/26/eiffel-tower-975004_150.jpg",
+      "url": "https://pixabay.com/get/5fe7d0434a56b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "girl, rain, femininity",
+      "previewUrl": "https://cdn.pixabay.com/photo/2019/01/25/11/18/girl-3954232_150.jpg",
+      "url": "https://pixabay.com/get/55e9d0474851ae14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, paris, france",
+      "previewUrl": "https://cdn.pixabay.com/photo/2015/05/15/14/27/eiffel-tower-768501_150.jpg",
+      "url": "https://pixabay.com/get/51e6dd464a53b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "paris, montmartre, path",
+      "previewUrl": "https://cdn.pixabay.com/photo/2018/03/02/17/19/paris-3193674_150.jpg",
+      "url": "https://pixabay.com/get/55e1dc404c55a814f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "paris, gargoyle, france",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/11/23/13/46/paris-1852928_150.jpg",
+      "url": "https://pixabay.com/get/57e8d0414350a414f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "eiffel tower, paris, city",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/10/30/20/08/eiffel-tower-1784212_150.jpg",
+      "url": "https://pixabay.com/get/57e7dd474853ae14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "paris, france, eiffel",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/03/09/09/45/paris-1245970_150.jpg",
+      "url": "https://pixabay.com/get/57e2d1464355ac14f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "louvre, museum, paris",
+      "previewUrl": "https://cdn.pixabay.com/photo/2016/02/19/11/51/louvre-1210004_150.jpg",
+      "url": "https://pixabay.com/get/57e2d4434a52a814f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    },
+    {
+      "tags": "sacré coeur, paris, church",
+      "previewUrl": "https://cdn.pixabay.com/photo/2013/04/09/08/08/sacre-coeur-102110_150.jpg",
+      "url": "https://pixabay.com/get/57e0d7424b52b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "paris, eiffel tower, french",
+      "previewUrl": "https://cdn.pixabay.com/photo/2014/08/11/11/06/paris-415476_150.jpg",
+      "url": "https://pixabay.com/get/52e1d0474d54b10ff3d8992cc62d30771438d6e64e507441732a7bd1904bc6_640.jpg"
+    },
+    {
+      "tags": "sacre coeur, cathedral, paris",
+      "previewUrl": "https://cdn.pixabay.com/photo/2019/05/09/11/52/sacre-coeur-4191069_150.jpg",
+      "url": "https://pixabay.com/get/52e1dc424a54a514f1dc8460962932791c3ed9ed504c704c7d297ed4924ac35b_640.jpg"
+    }
+  ]
+}
