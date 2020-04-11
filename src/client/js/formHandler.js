@@ -1,5 +1,6 @@
 const config = require('../../lib/config');
 const debug = require('../../lib/debug');
+const countryHelper = require('../../lib/country');
 const clientMock = require('./clientMock');
 
 import clearDayIcon from '../images/clear-day.png';
@@ -14,7 +15,6 @@ import snowIcon from '../images/snow.png';
 import windIcon from '../images/wind.png';
 
 // Variables
-let countries = null;
 let currentCountry = null;
 let currentCountryCode = null;
 
@@ -84,7 +84,7 @@ const getErrorHtml = (err) => {
  * @param {string} url Location to analyze the text from
  * @param {bool} useMock Mock vs real service call
  */
-const callAnalyzeText = async (url, useMock) => {
+const searchTrip = async (url, useMock) => {
   return useMock ? new Promise((resolve, reject) => {
     resolve(clientMock(url));
   }) : fetch(url);
@@ -118,7 +118,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   debug(`travelDate: ${travelDate}`);
 
   let mockResult = '';
-  await callAnalyzeText(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountry}&countryCode=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
+  await searchTrip(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountry}&countryCode=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
@@ -135,19 +135,17 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           mockResult = res;
         } else {
           document.getElementById('results').innerHTML = getResponseHtml(res);
-          document.getElementById('travel-details');
 
-          // TODO Check whether icon has been returned by API
-          // TODO Create function
-          const weatherIcon = document.getElementById('weather-icon');
           const weather = res.weather;
-          const altWeatherText = weather.iconName.replace(/-/g, ' ');
-          debug(weather.iconName);
-          weatherIcon.src = weatherIcons[weather.iconName];
-          weatherIcon.alt = altWeatherText;
-          weatherIcon.title = altWeatherText;
+          if (weather.iconName) {
+            const weatherIcon = document.getElementById('weather-icon');
+            const altWeatherText = weather.iconName.replace(/-/g, ' ');
+            debug(weather.iconName);
+            weatherIcon.src = weatherIcons[weather.iconName];
+            weatherIcon.alt = altWeatherText;
+            weatherIcon.title = altWeatherText;
+          }
 
-          // TODO Create function
           const photos = new DocumentFragment();
           for (const photo of res.photos) {
             const image = document.createElement('img');
@@ -157,6 +155,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
             photos.appendChild(image);
           }
           const locationPhotos = document.getElementById('location-photos');
+          locationPhotos.innerHTML = '';
           locationPhotos.appendChild(photos);
         }
       })
@@ -173,19 +172,10 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  getCountries().then(function(data) {
-    countries = data;
-    debug(countries);
-
-    const options = new DocumentFragment();
-    for (const country of countries) {
-      const opt = document.createElement('option');
-      opt.setAttribute('data-value', country.code);
-      opt.setAttribute('value', country.name);
-      options.appendChild(opt);
-    }
-
+document.addEventListener('DOMContentLoaded', async (event) => {
+  countryHelper.getCountries().then(function(data) {
+    // countries = data;
+    const options = countryHelper.createCountryOptions(data);
     const datalistCountry = document.getElementById('countries');
     datalistCountry.appendChild(options);
   });
@@ -203,16 +193,4 @@ document.getElementById('country').addEventListener('change', (event) => {
   document.getElementById('city').value = null;
 });
 
-const getCountries = async () => {
-  const url = `http://${config.serverName}:${config.serverPort}/countries`;
-  const response = await fetch(url);
-  try {
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    debug(`getCountries: ${error}`);
-  }
-};
-
-// module.exports = handleSubmit;
 export default handleSubmit;
