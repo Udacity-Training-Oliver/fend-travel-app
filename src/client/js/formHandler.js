@@ -1,35 +1,12 @@
 const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 const countryHelper = require('../../lib/country');
+const weatherHelper = require('../../lib/weather');
 const clientMock = require('./clientMock');
-
-import clearDayIcon from '../images/clear-day.png';
-import clearNightIcon from '../images/clear-night.png';
-import cloudyIcon from '../images/cloudy.png';
-import fogIcon from '../images/fog.png';
-import partlyCloudyDayIcon from '../images/partly-cloudy-day.png';
-import partlyCloudyNightIcon from '../images/partly-cloudy-night.png';
-import rainIcon from '../images/rain.png';
-import sleetIcon from '../images/sleet.png';
-import snowIcon from '../images/snow.png';
-import windIcon from '../images/wind.png';
 
 // Variables
 let currentCountry = null;
 let currentCountryCode = null;
-
-const weatherIcons = {
-  'clear-day': clearDayIcon,
-  'clear-night': clearNightIcon,
-  'partly-cloudy-day': partlyCloudyDayIcon,
-  'partly-cloudy-night': partlyCloudyNightIcon,
-  'cloudy': cloudyIcon,
-  'rain': rainIcon,
-  'sleet': sleetIcon,
-  'snow': snowIcon,
-  'wind': windIcon,
-  'fog': fogIcon,
-};
 
 /**
  * Compose the HTML for the client
@@ -141,7 +118,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
             const weatherIcon = document.getElementById('weather-icon');
             const altWeatherText = weather.iconName.replace(/-/g, ' ');
             debug(weather.iconName);
-            weatherIcon.src = weatherIcons[weather.iconName];
+            weatherIcon.src = weatherHelper.getIcon(weather.iconName);
             weatherIcon.alt = altWeatherText;
             weatherIcon.title = altWeatherText;
           }
