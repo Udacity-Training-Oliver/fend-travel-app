@@ -8,6 +8,7 @@ import rainIcon from '../client/images/rain.png';
 import sleetIcon from '../client/images/sleet.png';
 import snowIcon from '../client/images/snow.png';
 import windIcon from '../client/images/wind.png';
+import noWeatherInfoIcon from '../client/images/no-weather-info.png';
 
 const icons = {
   'clear-day': clearDayIcon,
@@ -20,6 +21,7 @@ const icons = {
   'snow': snowIcon,
   'wind': windIcon,
   'fog': fogIcon,
+  'no-weather-info': noWeatherInfoIcon,
 };
 
 export const getIcon = (iconName) => {

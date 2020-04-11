@@ -114,14 +114,15 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           document.getElementById('results').innerHTML = getResponseHtml(res);
 
           const weather = res.weather;
-          if (weather.iconName) {
-            const weatherIcon = document.getElementById('weather-icon');
-            const altWeatherText = weather.iconName.replace(/-/g, ' ');
-            debug(weather.iconName);
-            weatherIcon.src = weatherHelper.getIcon(weather.iconName);
-            weatherIcon.alt = altWeatherText;
-            weatherIcon.title = altWeatherText;
+          const weatherIcon = document.getElementById('weather-icon');
+          if (!weather.iconName) {
+            weather.iconName = 'no-weather-info';
           }
+          const altWeatherText = weather.iconName.replace(/-/g, ' ');
+          debug(weather.iconName);
+          weatherIcon.src = weatherHelper.getIcon(weather.iconName);
+          weatherIcon.alt = altWeatherText;
+          weatherIcon.title = altWeatherText;
 
           const photos = new DocumentFragment();
           for (const photo of res.photos) {
