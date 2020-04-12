@@ -127,6 +127,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
           const photos = new DocumentFragment();
           for (const photo of res.photos) {
             const image = document.createElement('img');
+            image.setAttribute('class', 'photo');
             image.setAttribute('src', photo.url);
             image.setAttribute('title', photo.tags);
             image.setAttribute('alt', photo.tags);

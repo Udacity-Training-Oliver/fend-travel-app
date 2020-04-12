@@ -1,0 +1,14 @@
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo {
+  margin: 5px;
+  border: 1px solid var(--box-border-color);
+  border-radius: 5px;    
+  max-height: 375px;
+  max-width: 375px;
+  object-fit: cover;
+  vertical-align: bottom;
+}
