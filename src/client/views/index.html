@@ -22,8 +22,8 @@
     </div>
   </header>
 
-  <main>
-    <section id="search-trip">
+  <main class="search-page">
+    <section class="search">
       <form class="" onsubmit="return Client.handleSubmit(event)">
 
         <label for="country">Country</label>
@@ -42,13 +42,18 @@
       </form>
     </section>
 
-    <section id="trip-details">
+    <section class="details">
       <h1>Trip Details:</h1>
       <img id="weather-icon">
       <div id="results"></div>
       <input type="button" value="Save Trip">
+    </section>
+
+    <section class="photos">      
+      <h1>Photos of Location:</h1>
       <div id="location-photos"></div>
     </section>
+
   </main>
 
   <footer>

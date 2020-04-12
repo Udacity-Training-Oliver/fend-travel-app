@@ -1,0 +1,40 @@
+@media (max-width: 900px) {
+  .search-page {
+      display: grid;
+      grid-template-areas: 
+          "header" 
+          "search"
+          "details" 
+          "photos"
+          "footer";
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(75px, auto) 1fr minmax(75px, auto) auto;
+  }
+}
+
+@media (min-width: 901px) {
+  .search-page {
+      display: grid;
+      grid-template-areas: 
+          "header header" 
+          "search details" 
+          "photos photos" 
+          "footer footer";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr auto 1fr auto;
+      grid-gap: 10px;
+      height: 99vh;
+  }
+}
+
+.search {
+  grid-area: search;
+}
+
+.details {
+  grid-area: details;
+}
+
+.photos {
+  grid-area: photos;
+}

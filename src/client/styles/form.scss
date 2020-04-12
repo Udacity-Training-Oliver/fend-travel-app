@@ -1,12 +1,17 @@
-form {
-  border: 1px solid #545454;
-  border-radius: 3px;
-  padding: 40px;
-}
-
 input {
+  border: none;
+  color: var(--input-fg-color);
+  background-color: var(--input-bg-color);
   padding: 5px 20px;
   width: 100%;
   line-height: 16px;
   margin: 10px 0;
+}
+
+input[type=submit],
+input[type=button] {
+  color: var(--input-button-fg-color);
+  background-color: var(--input-button-bg-color);
+  max-width: 200px;
+  border-radius: 5px;
 }
