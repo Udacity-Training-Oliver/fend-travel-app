@@ -2,7 +2,7 @@ require('regenerator-runtime');
 const dotenv = require('dotenv');
 const fetch = require('node-fetch');
 const debug = require('../lib/debug');
-const mockAPIResults = require('../lib/mockAPIResuls.js');
+const mockAPIResults = require('../lib/mockAPIResults.js');
 
 // Read sensitive data (API KEYS) from .env
 dotenv.config();

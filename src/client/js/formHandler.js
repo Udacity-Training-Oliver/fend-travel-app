@@ -128,7 +128,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
     event.preventDefault();
   }
 
-  const useMock = mockUrlToAnalyze != undefined;
+  const useMock = false; // TODO mockUrlToAnalyze != undefined;
 
   const city = document.getElementById('city').value;
   const travelDate = document.getElementById('travel-date').value;
@@ -144,8 +144,6 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   debug(`city: ${city}`);
   debug(`travelDate: ${travelDate}`);
 
-  let mockResult = '';
-
   const url = `http://${config.serverName}:${config.serverPort}/destinationDetails/?` +
     `country=${countryHelper.getCurrentCountry().name}&` +
     `countryCode=${countryHelper.getCurrentCountry().code}&` +
@@ -155,32 +153,27 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   await searchTrip(url, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
-        if (!res.ok) {
+        // TODO Adapt or remove
+        if (false) { // !res.ok) {
           debug(res);
           const errorMessage = createErrorMessage(res);
           throw errorMessage;
         }
-        return useMock ? res : res.json();
+        const result = useMock ? res : res.json();
+        debug(result);
+        return result;
       })
       // Prepare HTML to show as response
       .then((res) => {
         debug(`returned from server: ${JSON.stringify(res)}`);
-        if (useMock) {
-          mockResult = res;
-        } else {
-          document.getElementById('trip-details')
-              .innerHTML = getTripDetailsHtml(res);
-          styleWeatherIcon(res.weather);
-          addPhotos(res.photos);
-        }
+        document.getElementById('trip-details')
+            .innerHTML = getTripDetailsHtml(res);
+        styleWeatherIcon(res.weather);
+        addPhotos(res.photos);
       })
       // Error handling in case that something went wrong
       .catch((err) => {
-        if (useMock) {
-          mockResult = err;
-        } else {
-          document.getElementById('results').innerHTML = getErrorHtml(err);
-        }
+        document.getElementById('trip-details').innerHTML = getErrorHtml(err);
       });
   if (useMock) {
     return mockResult;
