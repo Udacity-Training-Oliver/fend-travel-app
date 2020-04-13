@@ -69,7 +69,6 @@ const endpoints = {
         const item = data.postalCodes[0];
 
         const coordinates = {
-          country: item.countryCode,
           state: item.adminName1,
           province: item.adminName3,
           zip: item.postalCode,
@@ -104,8 +103,8 @@ const endpoints = {
             time: new Date(day.time*1000).toISOString().split('T')[0],
             iconName: day.icon,
             summary: day.summary,
-            minTemperature: day.temperatureLow,
-            maxTemperature: day.temperatureMax,
+            minTemperature: Math.round(day.temperatureLow),
+            maxTemperature: Math.round(day.temperatureMax),
             windSpeed: day.windSpeed,
           },
         };

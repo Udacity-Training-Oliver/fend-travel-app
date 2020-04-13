@@ -1,5 +1,6 @@
 {
-  "country": "FR",
+  "countryCode": "FR",
+  "country": "France",
   "city": "Paris",
   "daysAway": 115,
   "state": "Île-de-France",
