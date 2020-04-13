@@ -41,6 +41,44 @@ const getTripDetailsHtml = (trip) => {
 };
 
 /**
+ * Style weather icon with alternate text and title
+ * and add placeholder in case that no weather details
+ * have been provided by the API
+ * @param {*} weather JSON weather object
+ */
+const styleWeatherIcon = (weather) => {
+  const weatherIcon = document.querySelector('.weather-icon');
+  if (!weather.iconName) {
+    weather.iconName = 'no-weather-info';
+  }
+  const altWeatherText = weather.iconName.replace(/-/g, ' ');
+  debug(weather.iconName);
+  weatherIcon.src = weatherHelper.getIcon(weather.iconName);
+  weatherIcon.alt = altWeatherText;
+  weatherIcon.title = altWeatherText;
+};
+
+/**
+ * Remove existing photos and add new ones as they
+ * have been passed as parameter
+ * @param {*} photos JSON photo object-array
+ */
+const addPhotos = (photos) => {
+  const photoFragment = new DocumentFragment();
+  for (const photo of photos) {
+    const image = document.createElement('img');
+    image.setAttribute('class', 'photo');
+    image.setAttribute('src', photo.url);
+    image.setAttribute('title', photo.tags);
+    image.setAttribute('alt', photo.tags);
+    photoFragment.appendChild(image);
+  }
+  const locationPhotos = document.getElementById('location-photos');
+  locationPhotos.innerHTML = '';
+  locationPhotos.appendChild(photoFragment);
+};
+
+/**
  * Compose error message
  * @param {*} data JSON error object
  * @return {string} Error messsage
@@ -75,7 +113,6 @@ const searchTrip = async (url, useMock) => {
     resolve(clientMock(url));
   }) : fetch(url);
 };
-
 
 /**
  * Handle submit event from form
@@ -133,30 +170,8 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
         } else {
           document.getElementById('trip-details')
               .innerHTML = getTripDetailsHtml(res);
-
-          const weather = res.weather;
-          const weatherIcon = document.querySelector('.weather-icon');
-          if (!weather.iconName) {
-            weather.iconName = 'no-weather-info';
-          }
-          const altWeatherText = weather.iconName.replace(/-/g, ' ');
-          debug(weather.iconName);
-          weatherIcon.src = weatherHelper.getIcon(weather.iconName);
-          weatherIcon.alt = altWeatherText;
-          weatherIcon.title = altWeatherText;
-
-          const photos = new DocumentFragment();
-          for (const photo of res.photos) {
-            const image = document.createElement('img');
-            image.setAttribute('class', 'photo');
-            image.setAttribute('src', photo.url);
-            image.setAttribute('title', photo.tags);
-            image.setAttribute('alt', photo.tags);
-            photos.appendChild(image);
-          }
-          const locationPhotos = document.getElementById('location-photos');
-          locationPhotos.innerHTML = '';
-          locationPhotos.appendChild(photos);
+          styleWeatherIcon(res.weather);
+          addPhotos(res.photos);
         }
       })
       // Error handling in case that something went wrong
@@ -172,18 +187,25 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   }
 };
 
+/**
+ * Event listener when a country-selection has been taken place.
+ * After selecting a new country the city field will always be emptied.
+ */
 document.getElementById('country').addEventListener('change', (event) => {
   debug(`Country before: ${JSON.stringify(countryHelper.getCurrentCountry())}`);
+
+  // Read the country from the selected option and update current country
   const currentCountryName = event.srcElement.value;
-  debug(currentCountryName);
   const currentCountryOption = document
       .querySelector(`#countries option[value='${currentCountryName}']`);
   countryHelper.setCurrentCountry({
     name: currentCountryOption.value,
     code: currentCountryOption.dataset.value,
   });
+
   debug(`Country after ${JSON.stringify(countryHelper.getCurrentCountry())}`);
 
+  // Empty city field after country-change
   document.getElementById('city').value = null;
 });
 
