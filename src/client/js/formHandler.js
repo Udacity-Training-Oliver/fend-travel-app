@@ -4,10 +4,6 @@ const countryHelper = require('../../lib/country');
 const weatherHelper = require('../../lib/weather');
 const clientMock = require('./clientMock');
 
-// Variables
-let currentCountry = null;
-let currentCountryCode = null;
-
 /**
  * Compose the HTML for the client
  * @param {*} trip JSON object returned from the server
@@ -101,15 +97,25 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const travelDate = document.getElementById('travel-date').value;
 
   // TODO remove debug assignment
-  currentCountry = currentCountry || 'France';
-  currentCountryCode = currentCountryCode || 'FR';
+  countryHelper.setCurrentCountry(
+      countryHelper.getCurrentCountry() || {
+        name: 'France',
+        code: 'FR',
+      });
 
-  debug(`country: ${currentCountryCode}`);
+  debug(`country: ${JSON.stringify(countryHelper.getCurrentCountry())}`);
   debug(`city: ${city}`);
   debug(`travelDate: ${travelDate}`);
 
   let mockResult = '';
-  await searchTrip(`http://${config.serverName}:${config.serverPort}/destinationDetails/?country=${currentCountry}&countryCode=${currentCountryCode}&city=${city}&travelDate=${travelDate}`, useMock)
+
+  const url = `http://${config.serverName}:${config.serverPort}/destinationDetails/?` +
+    `country=${countryHelper.getCurrentCountry().name}&` +
+    `countryCode=${countryHelper.getCurrentCountry().code}&` +
+    `city=${city}&travelDate=${travelDate}`;
+
+  debug(url);
+  await searchTrip(url, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
         if (!res.ok) {
@@ -166,23 +172,17 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', async (event) => {
-  countryHelper.getCountries().then(function(data) {
-    // countries = data;
-    const options = countryHelper.createCountryOptions(data);
-    const datalistCountry = document.getElementById('countries');
-    datalistCountry.appendChild(options);
-  });
-});
-
 document.getElementById('country').addEventListener('change', (event) => {
-  debug(`Country before: ${currentCountryCode}`);
+  debug(`Country before: ${JSON.stringify(countryHelper.getCurrentCountry())}`);
   const currentCountryName = event.srcElement.value;
+  debug(currentCountryName);
   const currentCountryOption = document
       .querySelector(`#countries option[value='${currentCountryName}']`);
-  currentCountry = currentCountryOption.value;
-  currentCountryCode = currentCountryOption.dataset.value;
-  debug(`Country after ${currentCountryCode}`);
+  countryHelper.setCurrentCountry({
+    name: currentCountryOption.value,
+    code: currentCountryOption.dataset.value,
+  });
+  debug(`Country after ${JSON.stringify(countryHelper.getCurrentCountry())}`);
 
   document.getElementById('city').value = null;
 });

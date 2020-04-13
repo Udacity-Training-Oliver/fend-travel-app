@@ -1,7 +1,15 @@
 const config = require('./config');
 const debug = require('./debug');
 
+let currentCountry = null; // e.g. {code: 'DE', name:m 'Germany'}
+
 const countryHelper = {
+  getCurrentCountry: () => {
+    return currentCountry;
+  },
+  setCurrentCountry: (pCurrentCountry) => {
+    currentCountry = pCurrentCountry;
+  },
   getCountries: async () => {
     const url = `http://${config.serverName}:${config.serverPort}/countries`;
     const response = await fetch(url);
@@ -24,5 +32,13 @@ const countryHelper = {
     return options;
   },
 };
+
+document.addEventListener('DOMContentLoaded', async (event) => {
+  countryHelper.getCountries().then(function(data) {
+    const options = countryHelper.createCountryOptions(data);
+    const datalistCountry = document.getElementById('countries');
+    datalistCountry.appendChild(options);
+  });
+});
 
 module.exports = countryHelper;
