@@ -10,6 +10,12 @@
       grid-template-columns: 1fr;
       grid-template-rows: auto minmax(75px, auto) 1fr minmax(75px, auto) auto;
   }
+
+  .weather-icon {
+    margin: 10px 0 5px 0;
+    width: 64px;
+    height: 64px;
+  }
 }
 
 @media (min-width: 901px) {
@@ -24,6 +30,12 @@
       grid-template-rows: auto 1fr auto 1fr auto;
       grid-gap: 10px;
       height: 99vh;
+  }
+
+  .weather-icon {
+    margin: 10px 0 5px 0;
+    width: 128px;
+    height: 128px;
   }
 }
 

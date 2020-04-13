@@ -10,24 +10,37 @@ let currentCountryCode = null;
 
 /**
  * Compose the HTML for the client
- * @param {*} data JSON object returned from the server
+ * @param {*} trip JSON object returned from the server
  * @return {string} HTML
  */
-const getResponseHtml = (data) => {
-  const weather = data.weather;
+const getTripDetailsHtml = (trip) => {
+  const weather = trip.weather;
 
   return `
-    <h2>Response from API</h2>
-    <ul>
-      <li>${data.country}</li>
-      <li>${data.city}</li>
-      <li>${weather.time}</li>
-      <li>${data.daysAway}</li>
-      <li>icon: ${weather.iconName}</li>
-      <li>${weather.summary}</li>
-      <li>${weather.minTemperature}</li>
-      <li>${weather.maxTemperature}</li>
-    </ul>
+    <h2>
+      My trip to: ${trip.city}, ${trip.country}
+    </h2>
+    <h2>
+      Departing: ${new Date(weather.time).toLocaleDateString()}
+    </h2>
+
+    <input type="button" value="Save Trip">
+    <input type="button" value="Remove Trip">
+
+    <div>
+      <p>
+        ${trip.city}, ${trip.country} is ${trip.daysAway} days away.
+      </p>
+    </div>
+
+    <div class="weather-info">
+      <p>
+        Typical weather for then is:<br>
+        High ${weather.maxTemperature}, low ${weather.minTemperature}
+      </p>
+      <p>${weather.summary || 'no weather details'}</p>
+      <img class="weather-icon">
+    </div>
   `;
 };
 
@@ -88,6 +101,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const travelDate = document.getElementById('travel-date').value;
 
   // TODO remove debug assignment
+  currentCountry = currentCountry || 'France';
   currentCountryCode = currentCountryCode || 'FR';
 
   debug(`country: ${currentCountryCode}`);
@@ -111,10 +125,11 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
         if (useMock) {
           mockResult = res;
         } else {
-          document.getElementById('results').innerHTML = getResponseHtml(res);
+          document.getElementById('trip-details')
+              .innerHTML = getTripDetailsHtml(res);
 
           const weather = res.weather;
-          const weatherIcon = document.getElementById('weather-icon');
+          const weatherIcon = document.querySelector('.weather-icon');
           if (!weather.iconName) {
             weather.iconName = 'no-weather-info';
           }
