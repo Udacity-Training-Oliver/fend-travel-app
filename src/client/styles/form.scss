@@ -15,3 +15,9 @@ input[type=button] {
   max-width: 150px;
   border-radius: 3px;
 }
+
+input[type=submit]:hover,
+input[type=button]:hover {
+  background-color: var(--input-button-hover-bg-color);
+  font-weight: bold;  
+}
