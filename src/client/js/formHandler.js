@@ -100,16 +100,13 @@ const getErrorHtml = (err) => {
 };
 
 /**
- * Analyze the text behind an url which will be passed as a parameter.
- * It can also controlles via the useMock-flag whether the real service
- * should be called or a mock should be used. The latter case is used
- * for automated tests with Jest.
+ * Search trip, can be used with the real service or a mock call,
+ * configuration takes place in config.js
  *
  * @param {string} url Location to analyze the text from
- * @param {bool} useMock Mock vs real service call
  */
-const searchTrip = async (url, useMock) => {
-  return useMock ? new Promise((resolve, reject) => {
+const searchTrip = async (url) => {
+  return config.useMock ? new Promise((resolve, reject) => {
     resolve(clientMock(url));
   }) : fetch(url);
 };
@@ -127,8 +124,6 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   if (event) {
     event.preventDefault();
   }
-
-  const useMock = false; // TODO mockUrlToAnalyze != undefined;
 
   const city = document.getElementById('city').value;
   const travelDate = document.getElementById('travel-date').value;
@@ -152,10 +147,10 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   debug(url);
 
   let mockResult = null;
-  await searchTrip(url, useMock)
+  await searchTrip(url)
       // Process response from service (or mock, if applicable)
       .then((res) => {
-        const result = useMock ? res : res.json();
+        const result = config.useMock ? res : res.json();
         debug(result);
         return result;
       })
@@ -183,7 +178,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
         document.getElementById('trip-details').innerHTML = getErrorHtml(err);
       });
 
-  if (useMock) {
+  if (config.useMock) {
     return mockResult;
   }
 };
