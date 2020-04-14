@@ -2,43 +2,8 @@ const config = require('../../lib/config');
 const debug = require('../../lib/debug');
 const countryHelper = require('../../lib/country');
 const weatherHelper = require('../../lib/weather');
+const htmlRenderer = require('../../lib/htmlRenderer');
 const clientMock = require('./clientMock');
-
-/**
- * Compose the HTML for the client
- * @param {*} trip JSON object returned from the server
- * @return {string} HTML
- */
-const getTripDetailsHtml = (trip) => {
-  const weather = trip.weather;
-
-  return `
-    <h2>
-      My trip to: ${trip.city}, ${trip.country}
-    </h2>
-    <h2>
-      Departing: ${new Date(weather.time).toLocaleDateString()}
-    </h2>
-
-    <input type="button" value="Save Trip">
-    <input type="button" value="Remove Trip">
-
-    <div>
-      <p>
-        ${trip.city}, ${trip.country} is ${trip.daysAway} days away.
-      </p>
-    </div>
-
-    <div class="weather-info">
-      <p>
-        Typical weather for then is:<br>
-        High ${weather.maxTemperature}, low ${weather.minTemperature}
-      </p>
-      <p>${weather.summary || 'no weather details'}</p>
-      <img class="weather-icon">
-    </div>
-  `;
-};
 
 /**
  * Style weather icon with alternate text and title
@@ -85,18 +50,6 @@ const addPhotos = (photos) => {
  */
 const createErrorMessage = (data) => {
   return `${data.status}: ${data.statusText}`;
-};
-
-/**
- * Compose the HTML for the error message
- * @param {*} err Error message
- * @return {string} HTML
- */
-const getErrorHtml = (err) => {
-  return `
-    <h2>An error occured</h2>
-    <p class='error-message'>${err}</p>
-  `;
 };
 
 /**
@@ -166,7 +119,7 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
 
         // Render trip details
         document.getElementById('trip-details')
-            .innerHTML = getTripDetailsHtml(res);
+            .innerHTML = htmlRenderer.getTripDetails(res);
         styleWeatherIcon(res.weather);
         addPhotos(res.photos);
         mockResult = res;
@@ -175,7 +128,8 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
       .catch((err) => {
         const locationPhotos = document.getElementById('location-photos');
         locationPhotos.innerHTML = '';
-        document.getElementById('trip-details').innerHTML = getErrorHtml(err);
+        document.getElementById('trip-details').innerHTML =
+          htmlRenderer.getError(err);
       });
 
   if (config.useMock) {
