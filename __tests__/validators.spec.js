@@ -1,20 +1,34 @@
 const validators = require('../src/server/validators');
 
 describe('Validator tests', () => {
-  test('Test completely invalid url', () => {
-    const url = 'this.is.not.a.valid.url';
-    const result = validators.checkUrl(url);
-    expect(result).toBe(false);
-  });
-  test('Test url without protocol', () => {
-    const url = 'www.test.com';
-    const result = validators.checkUrl(url);
-    expect(result).toBe(false);
-  });
-  test('Test valid url', () => {
-    const url = 'https://www.test.com';
-    const result = validators.checkUrl(url);
+  test('Test query with required fields specified', () => {
+    const query = {
+      country: 'Germany',
+      countryCode: 'DE',
+      city: 'Hamburg',
+      travelDate: '2020-08-03',
+    };
+    const result = validators.checkRequiredFields(query);
     expect(result).toBe(true);
+  });
+  test('Test query with required fields no completely specified', () => {
+    const query = {
+      country: 'Germany',
+      countryCode: 'DE',
+      travelDate: '2020-08-03',
+    };
+    const result = validators.checkRequiredFields(query);
+    expect(result).toBe(false);
+  });
+  test('Test valid travel date', () => {
+    const travelDate = '2020-08-03';
+    const result = validators.isValidDate(travelDate);
+    expect(result).toBe(true);
+  });
+  test('Test invalid travel date', () => {
+    const travelDate = '2020-xx-03';
+    const result = validators.isValidDate(travelDate);
+    expect(result).toBe(false);
   });
 });
 

@@ -5,8 +5,9 @@ const validators = {
    * @return {boolean} true when all required fields have been provided
    */
   checkRequiredFields: (query) => {
-    return query.country && query.countryCode &&
-      query.city && query.travelDate;
+    const result = query.country != null && query.countryCode != null &&
+      query.city != null && query.travelDate != null;
+    return result;
   },
   /**
    * Check for valid date
