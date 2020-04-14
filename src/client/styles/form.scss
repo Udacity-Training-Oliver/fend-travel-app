@@ -21,3 +21,7 @@ input[type=button]:hover {
   background-color: var(--input-button-hover-bg-color);
   font-weight: bold;  
 }
+
+.error-message {
+  color: var(--error-fg-color);
+}

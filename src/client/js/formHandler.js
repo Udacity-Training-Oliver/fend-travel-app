@@ -95,7 +95,7 @@ const createErrorMessage = (data) => {
 const getErrorHtml = (err) => {
   return `
     <h2>An error occured</h2>
-    <p>${err}</p>
+    <p class='error-message'>${err}</p>
   `;
 };
 

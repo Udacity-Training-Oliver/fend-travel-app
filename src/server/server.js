@@ -6,7 +6,7 @@ const cors = require('cors');
 const validators = require('./validators');
 const debug = require('../lib/debug');
 const endpoints = require('./endpoints');
-const mockAPIResults = require('../lib/mockAPIResults.js');
+// TODO use/remove const mockAPIResults = require('../lib/mockAPIResults.js');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -20,6 +20,27 @@ app.get('/', function(req, res) {
 });
 
 app.get('/destinationDetails', async (req, res) => {
+  // Validation
+  let validationError = null;
+  if (!validators.checkRequiredFields(req.query)) {
+    validationError = {
+      ok: false,
+      status: 400,
+      statusText: 'Bad Request (country, city and date are required)',
+    };
+  } else if (!validators.isValidDate(req.query.travelDate)) {
+    validationError = {
+      ok: false,
+      status: 400,
+      statusText: 'Bad Request (date is not a valid ISO-date)',
+    };
+  }
+  if (validationError) {
+    res.send(validationError);
+    return;
+  }
+
+
   // Get parameters and replace whitespaces by + for city
   const city = req.query.city.replace(/\s/g, '+');
   const country = req.query.country;
