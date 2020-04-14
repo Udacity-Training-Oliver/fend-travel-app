@@ -1,5 +1,5 @@
 const config = {
-  enableDebugInfo: true,
+  enableDebugInfo: false,
   useMock: false,
   serverName: 'localhost',
   serverPort: 8081,

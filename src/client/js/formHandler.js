@@ -82,12 +82,12 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const travelDate = document.getElementById('travel-date').value;
 
   // Debug assignment to save time when testing
-  //
-  // countryHelper.setCurrentCountry(
-  //     countryHelper.getCurrentCountry() || {
-  //       name: 'France',
-  //       code: 'FR',
-  //     });
+  // (defaulting of Country and city
+  countryHelper.setCurrentCountry(
+      countryHelper.getCurrentCountry() || {
+        name: 'France',
+        code: 'FR',
+      });
 
   debug(`country: ${JSON.stringify(countryHelper.getCurrentCountry())}`);
   debug(`city: ${city}`);
