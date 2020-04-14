@@ -81,12 +81,13 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
   const city = document.getElementById('city').value;
   const travelDate = document.getElementById('travel-date').value;
 
-  // TODO remove debug assignment
-  countryHelper.setCurrentCountry(
-      countryHelper.getCurrentCountry() || {
-        name: 'France',
-        code: 'FR',
-      });
+  // Debug assignment to save time when testing
+  //
+  // countryHelper.setCurrentCountry(
+  //     countryHelper.getCurrentCountry() || {
+  //       name: 'France',
+  //       code: 'FR',
+  //     });
 
   debug(`country: ${JSON.stringify(countryHelper.getCurrentCountry())}`);
   debug(`city: ${city}`);

@@ -6,7 +6,6 @@ const cors = require('cors');
 const validators = require('./validators');
 const debug = require('../lib/debug');
 const endpoints = require('./endpoints');
-// TODO use/remove const mockAPIResults = require('../lib/mockAPIResults.js');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
