@@ -21,14 +21,19 @@ const baseUrls = {
 
 const endpoints = {
   // Mocked API calls
-  mockAPICall: async (url) => {
+  destinationCoordinatesMock: async (city, country) =>{
     return new Promise((resolve, reject) => {
-      resolve(mockAPIResults.validAndExistingUrl);
+      resolve(mockAPIResults.destinationCoordinates);
     });
   },
-  destinationDetailsMock: async (city, country) =>{
+  destinationWeatherMock: async (longitude, latitude, travelDate) =>{
     return new Promise((resolve, reject) => {
-      resolve(mockAPIResults.geonamesSuccess);
+      resolve(mockAPIResults.destinationWeather);
+    });
+  },
+  destinationPhotoDataMock: async (city) =>{
+    return new Promise((resolve, reject) => {
+      resolve(mockAPIResults.destinationPhotos);
     });
   },
 
