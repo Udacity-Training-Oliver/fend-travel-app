@@ -6,14 +6,25 @@
 * [Commands](#commands)
 * [Project Structure](#project-structure)
 * [Testing](#testing)
-* [Project History](#project-history)
 
 ## Introduction
-The starter project has been taken as a template and was enhanced step by step, mainly the WebPack/JavaScript/Testing parts. This project was more complex than the others, primarily because of the required testing with Jest. 
-
-A lot of code refactoring became necessary and not all scenarios have been tested as I would have prefered them to be tested. More details on this topic can be found in the chapter [Testing](#testing).
-
 There is a **debug flag** together with the debug output function in the file `./lib.debug.js` which can be used to get some more "telemtry" from the application. The functionality is generally available (client/server/test/...).
+
+In the file `./lib.config.js` the following switches can be configured:
+```
+  enableDebugInfo = {true | false}
+  useMock:  = {true | false} (a mock API will be used)
+  serverName: HOSTNAME, e.g. 'localhost',
+  serverPort: PORT, e.g. 8081,
+```
+
+To use the real API three API Keys needs to be specified in the file `.env` which is not part of the repository for security reasons:
+
+```
+GEONAMES_API_KEY=xzy
+DARKSKY_API_KEY=aaaaaaaaaaaaaaa
+PIXABAY_API_KEY=bbbbbbbbbbbbbbb
+```
 
 As in all my projects I used ESLint for code validation. To get it up and running npm came into play to set up the necessary dependencies. That's the reason for the additional files and directories.
 
@@ -38,28 +49,52 @@ The following commands for building and running tests are available
 ```
 __tests__
   - endpoints.spec.js
-  - formHandler.spec.js
+  - htmlRenderer.spec.js
   - validators.spec.js
   
 src
 
 + client
+  + images
+    - clear-day.png
+    - clear-night.png
+    - cloudy.png
+    - fog.png
+    - no-weather-info.png
+    - partly-cloudy-day.png
+    - partly-cloudy-night.png
+    - rain.png
+    - README.txt (reference of the images)
+    - sleet.png
+    - snow.png
+    - wind.png
   + js
     - clientMock.js
     - formHandler.js
   + styles
-    - resets.scss
     - base.scss
+    - colors.scss
     - footer.scss
     - form.scss
     - header.scss
+    - layout.scss
+    - photos.scss
+    - resets.scss
+    - styles.scss
   + views
     - index.html
     
 + lib
   - config.js
+  - country.js
   - debug.js
+  - htmlRenderer.js
+  - mockAPIResultData.json
   - mockAPIResuls.js
+  - mockCoordinatesData.json
+  - mockPhotoData.json
+  - mockWeatherData.json
+  - weather.json
   
 + server
   - endpoints.js
@@ -75,7 +110,7 @@ README.md
 After the installation of Jest as testing framework the following test suites have been created for the following modules (see project structure):
 
 * **endpoints**: Backend endpoint tests
-* **formHandler**: Client-side tests
+* **htmlRenderer**: Client-side tests
 * **validators**: Validator tests
 
 The test suites are below the folder `__tests__` and following naming conventions suffixed by `.spec.js`. 
