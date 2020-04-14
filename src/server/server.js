@@ -40,16 +40,17 @@ app.get('/destinationDetails', async (req, res) => {
       .then((coordinates) => clientData = {...clientData, ...coordinates});
   debug(clientData);
 
-  await endpoints.destinationWeather(
-      clientData.longitude,
-      clientData.latitude,
-      travelDate)
-      .then((weather) => clientData = {...clientData, ...weather});
-  debug(clientData);
+  if (clientData.ok) {
+    await endpoints.destinationWeather(
+        clientData.longitude,
+        clientData.latitude,
+        travelDate)
+        .then((weather) => clientData = {...clientData, ...weather});
+    debug(clientData);
 
-  await endpoints.destinationPhotos(city)
-      .then((photos) => clientData = {...clientData, ...photos});
-
+    await endpoints.destinationPhotos(city)
+        .then((photos) => clientData = {...clientData, ...photos});
+  }
   res.send(clientData);
 });
 
@@ -63,19 +64,6 @@ app.get('/test', async (req, res) => {
   await endpoints.mockAPICall(url)
       .then((data) => res.send(data));
 });
-
-const analyzeText = (req, res) => {
-  const url = req.query.url;
-
-  if (!validators.checkUrl(url)) {
-    const invalidUrlMessage = `The url ${url} is not valid`;
-    debug(invalidUrlMessage);
-    res.status(406).send(invalidUrlMessage);
-    return;
-  }
-  res.send(mockAPIResults.validAndExistingUrl);
-};
-app.get('/analyzeText', analyzeText);
 
 // designates what port the app will listen to for incoming requests
 app.listen(config.serverPort, function() {

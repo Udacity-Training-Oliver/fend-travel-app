@@ -66,19 +66,30 @@ const endpoints = {
 
       try {
         const data = await response.json();
-        const item = data.postalCodes[0];
 
-        const coordinates = {
-          state: item.adminName1,
-          province: item.adminName3,
-          zip: item.postalCode,
-          // was set before city: item.placeName,
-          latitude: item.lat,
-          longitude: item.lng,
-        };
+        if (data.postalCodes.length) {
+          const item = data.postalCodes[0];
 
-        // debug(coordinates);
-        resolve(coordinates);
+          const coordinates = {
+            ok: true,
+            status: 200,
+            statusText: 'OK',
+            state: item.adminName1,
+            province: item.adminName3,
+            zip: item.postalCode,
+            // was set before city: item.placeName,
+            latitude: item.lat,
+            longitude: item.lng,
+          };
+          resolve(coordinates);
+        } else {
+          const notFound = {
+            ok: false,
+            status: 404,
+            statusText: 'Not found (invalid country/city-combination)',
+          };
+          resolve(notFound);
+        }
       } catch (error) {
         debug(`destinationCoordinates: ${error}`);
       }

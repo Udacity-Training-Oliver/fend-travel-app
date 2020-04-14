@@ -1,4 +1,7 @@
 {
+  "ok": true,
+  "status": 200,
+  "statusText": "OK",
   "country": "France",
   "countryCode": "FR",
   "city": "Paris",

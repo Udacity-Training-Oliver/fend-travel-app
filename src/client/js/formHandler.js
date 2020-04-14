@@ -150,15 +150,11 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
     `city=${city}&travelDate=${travelDate}`;
 
   debug(url);
+
+  let mockResult = null;
   await searchTrip(url, useMock)
       // Process response from service (or mock, if applicable)
       .then((res) => {
-        // TODO Adapt or remove
-        if (false) { // !res.ok) {
-          debug(res);
-          const errorMessage = createErrorMessage(res);
-          throw errorMessage;
-        }
         const result = useMock ? res : res.json();
         debug(result);
         return result;
@@ -166,15 +162,27 @@ const handleSubmit = async (event, mockUrlToAnalyze) => {
       // Prepare HTML to show as response
       .then((res) => {
         debug(`returned from server: ${JSON.stringify(res)}`);
+
+        // Error handling
+        if (!res.ok) {
+          const errorMessage = createErrorMessage(res);
+          throw errorMessage;
+        }
+
+        // Render trip details
         document.getElementById('trip-details')
             .innerHTML = getTripDetailsHtml(res);
         styleWeatherIcon(res.weather);
         addPhotos(res.photos);
+        mockResult = res;
       })
       // Error handling in case that something went wrong
       .catch((err) => {
+        const locationPhotos = document.getElementById('location-photos');
+        locationPhotos.innerHTML = '';
         document.getElementById('trip-details').innerHTML = getErrorHtml(err);
       });
+
   if (useMock) {
     return mockResult;
   }
